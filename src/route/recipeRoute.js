@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { getDetails } from "../controller/receipeController.js";
+import { generateGeminiRecipes } from "../controller/receipeController.js";
 const route = Router()
 
-route.post("/recipeDetails", getDetails)
+route.post("/recipeDetails", generateGeminiRecipes)
 
 export default route

@@ -1,10 +1,10 @@
 import mongoose, { Schema } from "mongoose";
 
-constuserRecipeRequest = new Schema.mongoose({
+const userRecipeRequest = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        required: true
+        required: false
     }, goal: {
         type: String,
         enum: ["fat_loss", "muscle_gain", "maintenance"],
@@ -17,21 +17,38 @@ constuserRecipeRequest = new Schema.mongoose({
     }, targetCalories: {
         type: Number,
         required: true
-    },
-    // meals: [{
-    mealType: {
+    }, mealType: {
         type: String,
         enum: ["breakfast", "lunch", "dinner", "mid_morning", "evening_snacks"],
         required: true
+    },
+    meals: [{
+        mealName: {
+            type: String,
+        }, prepTime: {
+            type: Number,
+            default: 15
+        }, people: {
+            type: Number,
+            default: 1
+        }, ingredients: [
+            {
+                item: String,
+                quantity: String,
+            },
+        ],
+        instructions: [{ type: String }],
+        macros: {
+            calories: { type: Number, default: 0 },
+            protein: { type: Number, default: 0 },
+            carbs: { type: Number, default: 0 },
+            fats: { type: Number, default: 0 },
+        },
+    }],
+    isFavourite: {
+        type: Boolean,
+        default: false
     }
-    // }, name: {
-    //     type: String,
-    //     required: true
-    // }, prepTime: {
-    //     type: Number,
-    //     required: true
-    // }
-    // }]
 }, {
     timestamps: true
 })

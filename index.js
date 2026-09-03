@@ -1,8 +1,9 @@
-import express from 'express'
 import dotenv from "dotenv"
+dotenv.config()
+import express from 'express'
 import { connectToDb } from './config/db.js'
 import route from './src/route/recipeRoute.js'
-dotenv.config()
+
 
 const app = express()
 
