@@ -15,7 +15,7 @@ const userRecipeRequest = new mongoose.Schema({
         enum: ["vegetarian", "non_vegetarian", "vegan", "eggetarian"],
         required: true
     }, targetCalories: {
-        type: Number,
+        type: String,
         required: true
     }, mealType: {
         type: String,
