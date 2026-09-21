@@ -1,5 +1,6 @@
 import { User } from "../model/userModel.js"
 import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
 
 export const registerUser = async (req, res) => {
     try {
@@ -60,9 +61,11 @@ export const loginUser = async (req, res) => {
                 message: "Email or password does not exist",
             })
         }
-        return res.status(200).json({
+        const token = jwt.sign({ userId: checkEmailExist._id }, process.env.JWT_SECRET, { expiresIn: "1d" })
+        res.status(200).json({
             success: true,
-            message: "User logged in successfully"
+            message: "User logged in successfully",
+            token
         })
     } catch (err) {
         res.status(500).json({
