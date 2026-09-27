@@ -4,7 +4,7 @@ const userRecipeRequest = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        required: false
+        required: true
     }, goal: {
         type: String,
         enum: ["fat_loss", "muscle_gain", "maintenance"],
