@@ -53,4 +53,4 @@ const userRecipeRequest = new mongoose.Schema({
     timestamps: true
 })
 
-export const RecipeDetails = mongoose.model("RecipeRequest", userRecipeRequest)
+export const RecipeDetails = mongoose.model("RecipeDetails", userRecipeRequest)

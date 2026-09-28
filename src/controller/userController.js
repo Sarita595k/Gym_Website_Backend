@@ -61,7 +61,7 @@ export const loginUser = async (req, res) => {
                 message: "Email or password does not exist",
             })
         }
-        const token = jwt.sign({ userId: checkEmailExist._id }, process.env.JWT_SECRET, { expiresIn: "1d" })
+        const token = jwt.sign({ _id: checkEmailExist._id }, process.env.JWT_SECRET, { expiresIn: "1d" })
         res.status(200).json({
             success: true,
             message: "User logged in successfully",

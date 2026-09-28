@@ -9,7 +9,7 @@ export const verifyToken = (req, res, next) => {
     if (!token) {
         return res.status(401).json({
             success: false,
-            message: "Access denied. No token provided."
+            message: "Please login first to access this feature."
         });
     }
 
@@ -18,13 +18,16 @@ export const verifyToken = (req, res, next) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
         // 3. Attach user data to request object so downstream routes can use it
-        req.user = decoded;
+        req.user = {
+            ...decoded,
+            _id: decoded._id || decoded.userId || decoded.id
+        };
 
         next(); // Pass control to the actual controller
     } catch (err) {
         return res.status(403).json({
             success: false,
-            message: "Invalid or expired token."
+            message: "Please login first to access this feature."
         });
     }
 };

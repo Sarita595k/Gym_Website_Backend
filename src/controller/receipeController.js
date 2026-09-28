@@ -1,7 +1,14 @@
 import { GoogleGenAI } from "@google/genai"
-
+import { RecipeDetails } from "../model/recipeModel.js";
 export const generateGeminiRecipes = async (req, res) => {
     try {
+        const userId = req.user?._id
+        if (!userId) {
+            return res.status(401).json({
+                success: false,
+                message: "You have to log in to access this feature."
+            });
+        }
         const Ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY })
         // console.log("api key", process.env.GEMINI_API_KEY)
         const { goal, dietType, targetCalories, mealType } = req.body
@@ -39,16 +46,25 @@ RULES:
         })
 
         const parsedData = JSON.parse(response.text)
-
+        const savedRecipeDoc = await RecipeDetails.create({
+            userId,
+            goal,
+            dietType,
+            targetCalories,
+            mealType,
+            meals: parsedData
+        });
         return res.status(200).json({
             success: true,
             message: "recipes fetched successfully",
-            data: parsedData
+            data: parsedData,
+            savedRecipeId: savedRecipeDoc._id
         });
 
     } catch (err) {
         return res.status(500).json({
-            message: "Error in connecting to generate recipes"
+            message: "Error in connecting to generate recipes",
+            error: err.message
         })
     }
 }
